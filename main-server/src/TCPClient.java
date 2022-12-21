@@ -11,7 +11,7 @@ public class TCPClient {
     public TCPClient(String name) {
         this.name = name;
         try {
-            socket = new Socket("localhost", 3131);
+            socket = new Socket("localhost", 3232);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
         } catch (Exception e) {

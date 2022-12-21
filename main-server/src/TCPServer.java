@@ -9,13 +9,22 @@ import java.util.List;
 public class TCPServer extends Thread {
     public List<Thread> threads = new ArrayList<>();
 
+    int period = 1000;
+    int port = 3232;
 
+    String message;
+
+    public TCPServer(int period, int port, String message) {
+        this.message = message;
+        this.period = period;
+        this.port = port;
+    }
 
     @Override
     public void run() {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(3131);
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -24,7 +33,7 @@ public class TCPServer extends Thread {
             while (true) {
                 try {
                     var socket = serverSocket.accept();
-                    var thread = new TCPConnection(socket);
+                    var thread = new TCPConnection(socket, period, message);
                     thread.start();
                     threads.add(thread);
                 } catch (Exception e) {

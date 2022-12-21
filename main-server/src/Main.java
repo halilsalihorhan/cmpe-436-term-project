@@ -1,34 +1,11 @@
 public class Main {
     public static void main(String[] args) {
 
-        var tcpServer = new TCPServer();
+        var tcpServer = new TCPServer(200, 1616, "Lorem Ipsum Dolar Sit, Amet LOTHAR Frank");
         tcpServer.start();
-
-        var tcpClient = new TCPClient("ALI");
-        var tcpClient2 = new TCPClient("VELI");
-
-        var thread = new Thread(() -> {
-            for(int i = 0; i < 10; i++){
-                tcpClient.request();
-            }
-        });
-
-
-        thread.start();
-        var thread2 = new Thread(() -> {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            tcpClient2.request();
-            try {
-                Thread.sleep(6000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            tcpClient2.request();
-        });
-        thread2.start();
+        var tcpServer1 = new TCPServer(10, 4242, "Lorem Ipsu");
+        tcpServer1.start();
+        var tcpServer2 = new TCPServer(200, 8181, "m Dolar Sit, Amet LOTHAR Frank");
+        tcpServer2.start();
     }
 }

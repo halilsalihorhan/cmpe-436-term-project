@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TCPConnection extends Thread{
@@ -12,16 +13,16 @@ public class TCPConnection extends Thread{
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public TCPConnection(Socket socket) throws IOException {
+    int period = 1000;
+
+
+    public TCPConnection(Socket socket, int period, String message) throws IOException {
+        this.period = period;
         this.socket = socket;
         dataInputStream =  new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        messages.add("Hello from server");
-        messages.add("How are you?");
-        messages.add("I'm fine, thank you");
-        messages.add("Goodbye");
-        messages.add("See you later");
-        messages.add("Bye");
+        var x = message.split("");
+        messages.addAll(Arrays.asList(x));
     }
 
     @Override
@@ -29,9 +30,10 @@ public class TCPConnection extends Thread{
         super.run();
         try{
             while (true){
-                String message = readRequest();
+//                String message = readRequest();
                 //
                 pointer++;
+                Thread.sleep(period);
                 sendResponse(messages.get(pointer - 1));
                 if(pointer == messages.size()){
                     closeConnection();
