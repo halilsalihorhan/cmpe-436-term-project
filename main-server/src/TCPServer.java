@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TCPServer extends Thread {
-    public List<Thread> threads = new ArrayList<>();
-
-    int period = 1000;
+    public List<TCPConnection> threads = new ArrayList<>();
+    public Map<Integer, RRect> shapes = new HashMap<>();
     int port = 3232;
 
-    String message;
+    public static Integer generator = 0;
 
-    public TCPServer(int period, int port, String message) {
-        this.message = message;
-        this.period = period;
+    public TCPServer(int port) {
         this.port = port;
     }
 
@@ -33,7 +32,7 @@ public class TCPServer extends Thread {
             while (true) {
                 try {
                     var socket = serverSocket.accept();
-                    var thread = new TCPConnection(socket, period, message);
+                    var thread = new TCPConnection(socket, shapes, threads);
                     thread.start();
                     threads.add(thread);
                 } catch (Exception e) {
