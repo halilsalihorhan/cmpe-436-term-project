@@ -1,2 +1,2 @@
 # cmpe-436-term-project
-Simple Cascaded Content Delivery
+Contour - a Distributed Entity Management System
